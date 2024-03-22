@@ -14,7 +14,7 @@ contract DaxFaucet {
     }
 
     function depositFaucet (uint256 _amount) public payable {
-        require(msg.value > 0, "Invalid Amount");
+        require(msg.value < 0, "Invalid Amount");
 
         emit deposit(msg.sender, _amount);
     }
