@@ -20,7 +20,7 @@ contract DaxFaucet {
     }
 
     function faucetBalance () public view returns (uint256) {
-        return balance(address(owner));
+        return owner.balance;
     }
 
     function withDrawFaucet () public payable returns (uint256) {
