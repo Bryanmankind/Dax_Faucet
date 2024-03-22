@@ -23,10 +23,9 @@ contract DaxFaucet {
         return address(this).balance;
     }
 
-    function withDrawFaucet () public payable returns (uint256) {
-        require(address.(this) > 0.01 ether, "You must have more then 0.01 ether in your wallet");
-        address(this).timeStamp()
-        return transfer(owner, 0.01).address.(this);
+    function withDrawFaucet () public payable {
+        require(msg.value > 0.01 ether, "You must have more then 0.01 ether in your wallet");
+        emit transfer(address(this), msg.sender, 0.01 ether);
     }
 
 }
