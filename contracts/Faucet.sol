@@ -2,13 +2,8 @@
 pragma solidity ^0.8.24;
 
 import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-// import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-interface  IERC20 {
-        function transfer (address to, uint256 amount) external view returns (bool);
-        function balanceOf (address _acount) external view returns (uint256);
-        event Transfer(address indexed from, address indexed  to, uint256 value);
-    }
 
 contract DaxFaucet {
 
@@ -21,6 +16,7 @@ contract DaxFaucet {
     mapping (address => uint256) public usersWithdrawTime;
 
     event deposit (address indexed sender, uint256 indexed _amount);
+    event withDrawal (address indexed from, uint256 indexed _amount);
 
     constructor (address _tokenAddress){
         token = IERC20(_tokenAddress);
@@ -54,7 +50,8 @@ contract DaxFaucet {
         lockTime = _time * 1 minutes;
     }
 
-    function withDraw () external view  onlyOwner {
+    function withDraw () external  onlyOwner {
+        emit withDrawal(msg.sender, token.balanceOf(address(this)));
         token.transfer(msg.sender, token.balanceOf(address(this)));
     }
 
