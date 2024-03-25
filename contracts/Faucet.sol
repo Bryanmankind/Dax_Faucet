@@ -50,4 +50,17 @@ contract DaxFaucet {
         token.transfer(msg.sender, withDrawAmount);
     }
 
+    function reSetwithDrawAmount (uint256 _amount) private onlyOwner{
+        withDrawAmount = _amount * (10 ** 18) ;
+    }
+
+    function reSetlockTime (uint256 _time) private onlyOwner {
+        lockTime = _time;
+    }
+
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Only Owner can call this function");
+        _;
+    }
+
 }
