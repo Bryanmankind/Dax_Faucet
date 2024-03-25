@@ -39,7 +39,8 @@ contract DaxFaucet {
     }
 
     function withDrawFaucet () public {
-
+        require(msg.sender != address(0), "You need 0.001 ether in your wallet");
+        require(token.balanceOf(address(this)) >= withDrawAmount, "Not enough faucet at the moment");
         token.transfer(msg.sender, withDrawAmount);
 
         require(faucetWithDrawTime(msg.sender), "You can only withdraw in 24 hours");
