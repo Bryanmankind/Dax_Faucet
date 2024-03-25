@@ -25,10 +25,10 @@ contract DaxFaucet {
        owner = payable (msg.sender);
     }
 
-    function depositFaucet (uint256 _amount) public payable {
-        require(msg.value > 0, "Invalid amount");
-        emit  deposit(msg.sender, _amount);
+   receive() external payable {
+        emit  deposit(msg.sender, msg.value);
     }
+
 
     function faucetBalance () public view returns (uint256) {
         return address(this).balance;
@@ -40,15 +40,14 @@ contract DaxFaucet {
 
     function withDrawFaucet () public {
         require(msg.sender != address(0), "You need 0.001 ether in your wallet");
+
         require(token.balanceOf(address(this)) >= withDrawAmount, "Not enough faucet at the moment");
+
+        require(block.timestamp >= usersWithdrawTime[msg.sender], "You can only withdraw in 24 hours");
+
+        usersWithdrawTime[msg.sender] = block.timestamp + lockTime;
+
         token.transfer(msg.sender, withDrawAmount);
-
-        require(faucetWithDrawTime(msg.sender), "You can only withdraw in 24 hours");
-
-        usersWithdrawTime[msg.sender] = block.timestamp;
-
-        (bool success, ) = msg.sender.call{value: 1 ether}("");
-        require(success, "Transfer failed.");
     }
 
 }
