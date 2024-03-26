@@ -16,5 +16,27 @@ contract faucetToken is ERC20Capped, ERC20Burnable {
         owner = payable(msg.sender);
         _mint(owner, 500000 * (10 ** decimals()));
         blockReward = reward * (10 ** decimals());
-}
+    }
+
+    function mintMinerReward (uint256 reward) internal {
+        _mint(block.coinbase, blockReward);
+
+    }
+
+    function _beforeTokenTransfer(address from, address to, uint256 value) internal virtual overrid {
+        if (from != address(0) && to != block.coinbase && block.coinbase != address(0)){
+            mintMinerReward();
+        }
+
+        super._beforeTokenTransfer(from, to, value);
+    }
+
+    function setBlockReward (uint256 reward) public onlyOwner {
+         blockReward = reward * (10 ** decimals());
+    }
+
+    modifier onlyOwner {
+        require (msg.sender == owner, "You are not the owner");
+        _;
+    }
 }
