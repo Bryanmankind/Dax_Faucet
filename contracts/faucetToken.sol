@@ -8,11 +8,13 @@ import {ERC20Burnable} from "@openzeppelin/contracts/token/ERC20/extension/ERC20
 
 
 
-contract faucetToken is ERC20Capped {
-    address payable owner;
+contract faucetToken is ERC20Capped, ERC20Burnable {
+    address payable public owner;
+    uint256 public blockReward;
 
-    constructor (uint256 cap) ERC20("faucetToken", "FCT") ERC20Capped(cap * (10 ** decimals())) {
+    constructor (uint256 cap, uint256 reward) ERC20("faucetToken", "FCT") ERC20Capped(cap * (10 ** decimals())) {
         owner = payable(msg.sender);
-        _mint(owner, 500000 * (10 ** decimals()))
+        _mint(owner, 500000 * (10 ** decimals()));
+        blockReward = reward * (10 ** decimals());
 }
 }
