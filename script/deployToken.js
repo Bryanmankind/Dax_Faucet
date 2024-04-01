@@ -1,12 +1,10 @@
 const {ethers} = require ("hardhat");
 
 const main = async () => {
-    const dexTokenContractFactory = await ether.getContractFactory("faucetToken");
+    const dexTokenContractFactory = await ethers.getContractFactory("faucetToken");
     const dexTokenDeploy = await dexTokenContractFactory.deploy();
 
-    await dexTokenDeploy.deployed();
-
-    console.log("Contract deployed to: ", dexTokenDeploy.getAddress() )
+    console.log("Contract deployed to: ", await dexTokenDeploy.getAddress() )
 }
 
 const runMain = async () => {
@@ -15,9 +13,9 @@ const runMain = async () => {
         process.exit(1);
 
     }catch (error) {
-        process.exit(1);
         console.log(error);
+        process.exit(1);
     }
 }
 
-runMain()
+runMain();
