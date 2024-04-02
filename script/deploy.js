@@ -2,7 +2,7 @@ const {ethers} = require ("hardhat");
 
 const main = async () => {
     const Faucet = await ethers.getContractFactory("DaxFaucet");
-    const faucet = await Faucet.deploy("0x5FbDB2315678afecb367f032d93F642f64180aa3");
+    const faucet = await Faucet.deploy("0x93bc02D63A309F17eb08e172848304c65e2DD807");
 
     console.log("Contract deploy to: ", await faucet.getAddress());
 
