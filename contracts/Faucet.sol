@@ -42,11 +42,11 @@ contract DaxFaucet {
         token.transfer(msg.sender, withDrawAmount);
     }
 
-    function reSetwithDrawAmount (uint256 _amount) private onlyOwner{
+    function reSetwithDrawAmount (uint256 _amount) public onlyOwner{
         withDrawAmount = _amount * (10 ** 18) ;
     }
 
-    function reSetlockTime (uint256 _time) private onlyOwner {
+    function reSetlockTime (uint256 _time) public onlyOwner {
         lockTime = _time * 1 minutes;
     }
 
